@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#F2F4F6"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/receiveTxtView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="24dp"
+                android:onClick="clearReceiveData"
+                android:text="清除"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="24dp"
+                android:text="接收端"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/receiveHexCheckBox"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.574"
+                app:layout_constraintStart_toEndOf="@+id/receiveTxtView" />
+
+            <CheckBox
+                android:id="@+id/receiveHexCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:checked="true"
+                android:text="十六进制"
+                app:layout_constraintBottom_toTopOf="@+id/button3"
+                app:layout_constraintEnd_toEndOf="@+id/button3"
+                app:layout_constraintStart_toStartOf="@+id/button3" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+            android:background="#EFEFEF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/ss"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="25dp"
+                android:text="串口:"
+                app:layout_constraintBottom_toTopOf="@+id/ff"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/seaialPortTxtView"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/itemHeight"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="#FFFFFF"
+                android:onClick="selectSerialPort"
+                android:text="--"
+                app:layout_constraintBottom_toBottomOf="@+id/ss"
+                app:layout_constraintEnd_toStartOf="@+id/textView2"
+                app:layout_constraintStart_toEndOf="@+id/ss"
+                app:layout_constraintTop_toTopOf="@+id/ss" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="波特率:"
+                app:layout_constraintBottom_toBottomOf="@+id/seaialPortTxtView"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="@+id/seaialPortTxtView" />
+
+            <EditText
+                android:id="@+id/baudRateEditTxt"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/itemHeight"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="#FFFFFF"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="9600"
+                app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView2"
+                app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+            <TextView
+                android:id="@+id/ff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="数据位:"
+                app:layout_constraintEnd_toEndOf="@+id/ss"
+                app:layout_constraintStart_toStartOf="@+id/ss"
+                app:layout_constraintTop_toBottomOf="@+id/ss" />
+
+            <TextView
+                android:id="@+id/dataBitsTxtView"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/itemHeight"
+                android:layout_marginStart="16dp"
+                android:background="#FFFFFF"
+                android:onClick="selectDataBits"
+                android:text="8"
+                app:layout_constraintBottom_toBottomOf="@+id/ff"
+                app:layout_constraintEnd_toEndOf="@+id/seaialPortTxtView"
+                app:layout_constraintStart_toStartOf="@+id/seaialPortTxtView"
+                app:layout_constraintTop_toTopOf="@+id/ff" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="校验位:"
+                app:layout_constraintBottom_toBottomOf="@+id/ff"
+                app:layout_constraintStart_toStartOf="@+id/textView2"
+                app:layout_constraintTop_toTopOf="@+id/ff" />
+
+            <TextView
+                android:id="@+id/parityTxtView"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/itemHeight"
+                android:background="#FFFFFF"
+                android:onClick="selectParity"
+                android:text="不校验"
+                app:layout_constraintBottom_toBottomOf="@+id/textView6"
+                app:layout_constraintEnd_toEndOf="@+id/baudRateEditTxt"
+                app:layout_constraintStart_toStartOf="@+id/baudRateEditTxt"
+                app:layout_constraintTop_toTopOf="@+id/textView6" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="停止位:"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ff" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="流控:"
+                app:layout_constraintBottom_toBottomOf="@+id/textView8"
+                app:layout_constraintStart_toStartOf="@+id/ff"
+                app:layout_constraintTop_toTopOf="@+id/textView8"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/flowConTxtView"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/itemHeight"
+                android:background="#FFFFFF"
+                android:onClick="selectFlowcon"
+                android:text="0"
+                app:layout_constraintBottom_toBottomOf="@+id/textView10"
+                app:layout_constraintEnd_toEndOf="@+id/dataBitsTxtView"
+                app:layout_constraintStart_toStartOf="@+id/dataBitsTxtView"
+                app:layout_constraintTop_toTopOf="@+id/textView10" />
+
+            <EditText
+                android:id="@+id/sendEditTxt"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/itemHeight"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="#FFFFFF"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button2"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:onClick="sendData"
+                android:text="发送"
+                app:layout_constraintBottom_toBottomOf="@+id/sendEditTxt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/sendEditTxt"
+                app:layout_constraintTop_toTopOf="@+id/sendEditTxt" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginBottom="32dp"
+                android:text="发送端"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/ss"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ToggleButton
+                android:id="@+id/openSerialPortBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:checked="false"
+                android:onClick="openSerialPort"
+                android:text="ToggleButton"
+                android:textOff="打开串口"
+                android:textOn="关闭串口"
+                app:layout_constraintBottom_toBottomOf="@+id/textView16"
+                app:layout_constraintStart_toEndOf="@+id/textView16"
+                app:layout_constraintTop_toTopOf="@+id/textView16" />
+
+            <CheckBox
+                android:id="@+id/sendHexCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:checked="true"
+                android:text="十六进制"
+                app:layout_constraintBottom_toTopOf="@+id/sendEditTxt"
+                app:layout_constraintStart_toStartOf="@+id/textView10"
+                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="停止位:"
+                app:layout_constraintBottom_toBottomOf="@+id/textView10"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="@+id/textView10"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/stopBitsTxtView"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/itemHeight"
+                android:background="#FFFFFF"
+                android:onClick="selectStopBits"
+                android:text="1"
+                app:layout_constraintBottom_toBottomOf="@+id/textView"
+                app:layout_constraintEnd_toEndOf="@+id/parityTxtView"
+                app:layout_constraintStart_toStartOf="@+id/parityTxtView"
+                app:layout_constraintTop_toTopOf="@+id/textView" />
+
+            <EditText
+                android:id="@+id/audoSendTimeEditTxt"
+                android:layout_width="100dp"
+                android:layout_height="@dimen/itemHeight"
+                android:background="#FFFFFF"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="500"
+                app:layout_constraintBottom_toBottomOf="@+id/sendHexCheckBox"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="@+id/sendHexCheckBox" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ms"
+                app:layout_constraintBottom_toBottomOf="@+id/audoSendTimeEditTxt"
+                app:layout_constraintStart_toEndOf="@+id/audoSendTimeEditTxt"
+                app:layout_constraintTop_toTopOf="@+id/audoSendTimeEditTxt" />
+
+            <CheckBox
+                android:id="@+id/autoSendCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="自动"
+                app:layout_constraintBottom_toBottomOf="@+id/audoSendTimeEditTxt"
+                app:layout_constraintStart_toEndOf="@+id/textView3"
+                app:layout_constraintTop_toTopOf="@+id/audoSendTimeEditTxt" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

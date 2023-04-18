@@ -1,0 +1,32 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.0.0'
+
+        // 推送到bintray助手
+//        classpath 'com.novoda:bintray-release:0.9.2'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+    // 解决上传乱码问题
+//    tasks.withType(Javadoc) {
+//        options {
+//            encoding "UTF-8"
+//            charSet "UTF-8"
+//            links "http://docs.oracle.com/javase/7/docs/api"
+//        }
+//    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

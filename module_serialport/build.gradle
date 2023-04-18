@@ -1,0 +1,67 @@
+plugins {
+	id 'com.android.library'
+}
+//apply plugin: 'com.novoda.bintray-release'
+//publish {
+//    userOrg = '***'//bintray.com用户名
+//    groupId = 'com.wrs.project'//jcenter上的路径
+//    artifactId = 'serial-port'//项目名称
+//    publishVersion = '0.0.1'//版本号
+//    desc = 'android SerialPort 串口读写，支持串口参数波特率、数据位、校验位、停止位、流控等'
+//    website = 'https://github.com/LiZachary/lgzUtils'//网站，最好有，不重要
+//}
+
+
+android {
+	compileSdkVersion 33
+	namespace 'com.wrs.project.module.serialport'
+	defaultConfig {
+		minSdkVersion 21
+		//noinspection ExpiredTargetSdkVersion
+		targetSdkVersion 29
+
+		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+		consumerProguardFiles "consumer-rules.pro"
+	}
+
+	buildTypes {
+		release {
+			minifyEnabled false
+			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+		}
+	}
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_1_8
+		targetCompatibility JavaVersion.VERSION_1_8
+	}
+	externalNativeBuild {
+		cmake {
+			path file('src/main/cpp/CMakeLists.txt')
+			version '3.22.1'
+		}
+	}
+	buildFeatures {
+		viewBinding true
+	}
+//    externalNativeBuild {
+//        cmake {
+//            cppFlags ""
+//        }
+//    }
+//            version "3.10.2"
+//    cmake {
+//        path "src/main/cpp/CMakeLists.txt"
+//
+//    }
+//    externalNativeBuild {
+//    }
+}
+
+dependencies {
+
+	implementation 'androidx.appcompat:appcompat:1.6.1'
+	implementation 'com.google.android.material:material:1.8.0'
+	testImplementation 'junit:junit:4.13.2'
+	androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+	androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}

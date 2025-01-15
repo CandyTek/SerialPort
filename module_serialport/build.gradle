@@ -22,6 +22,12 @@ android {
 
 		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 		consumerProguardFiles "consumer-rules.pro"
+
+		ndk {
+			//noinspection ChromeOsAbiSupport
+			abiFilters 'armeabi-v7a'
+		}
+
 	}
 
 	buildTypes {
@@ -37,7 +43,7 @@ android {
 	externalNativeBuild {
 		cmake {
 			path file('src/main/cpp/CMakeLists.txt')
-			version '3.22.1'
+			//version '3.22.1'
 		}
 	}
 	buildFeatures {

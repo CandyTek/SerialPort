@@ -17,6 +17,11 @@ android {
 		versionName "1.0"
 
 		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+		ndk {
+			//noinspection ChromeOsAbiSupport
+			abiFilters 'armeabi-v7a'
+		}
+
 	}
 
 	buildTypes {

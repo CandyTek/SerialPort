@@ -1,12 +1,13 @@
-# 原作者 @狼人残风，狼人残风版权所有
-# 原作者文章：[Android 串口通讯_狼人残风的博客-CSDN博客](https://blog.csdn.net/wenrisheng/article/details/115380053)
-# 原作者博客：[狼人残风的博客_CSDN博客](https://blog.csdn.net/wenrisheng?type=blog)
-# 原作者项目地址：[android / SerialPort · GitCode](https://gitcode.net/android1/serialport)
+#### 原作者 @狼人残风
+#### 原作者文章：[Android 串口通讯_狼人残风的博客-CSDN博客](https://blog.csdn.net/wenrisheng/article/details/115380053)
+#### 原作者博客：[狼人残风的博客_CSDN博客](https://blog.csdn.net/wenrisheng?type=blog)
+#### 原作者项目地址：[android / SerialPort · GitCode](https://gitcode.net/android1/serialport)
+#### 此仓库为 复刻
 
 ---
+<br>
 
-## 此仓库为复刻
-## 更新Gradle 8.0
+#### 此仓库为复刻更新Gradle 7.5
 
 ![](https://user-images.githubusercontent.com/39211450/232660553-42d7be6e-16a8-4618-bdcf-cbbdecb498fd.png)
 

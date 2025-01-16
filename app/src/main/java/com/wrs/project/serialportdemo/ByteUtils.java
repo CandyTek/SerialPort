@@ -150,6 +150,8 @@ public class ByteUtils {
      * @return
      */
     public static byte[] hexStrToByteArray(String s) {
+        // 去除字符串中的空格
+        s = s.replaceAll("\\s+", "");
         int len = s.length();
         byte[] data = new byte[len / 2];
         for (int i = 0; i < len; i += 2) {

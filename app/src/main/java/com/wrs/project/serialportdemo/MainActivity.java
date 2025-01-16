@@ -126,7 +126,12 @@ public class MainActivity extends AppCompatActivity implements OnSerialPortListe
 		String str = binding.sendEditTxt.getText().toString();
 		byte[] data = null;
 		if (binding.sendHexCheckBox.isChecked()) {
-			data = ByteUtils.hexStrToByteArray(str);
+			try {
+				data = ByteUtils.hexStrToByteArray(str);
+			}
+			catch (Exception e) {
+				Toast.makeText(this.getApplicationContext(),"十六进制转换失败\n"+e.getMessage(),Toast.LENGTH_SHORT).show();
+			}
 		} else {
 			data = str.getBytes();
 		}

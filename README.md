@@ -7,7 +7,7 @@
 ---
 <br>
 
-#### 此仓库为复刻更新Gradle 7.5
+#### 更新Gradle 7.5
 
 ![](https://user-images.githubusercontent.com/39211450/232660553-42d7be6e-16a8-4618-bdcf-cbbdecb498fd.png)
 

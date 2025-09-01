@@ -57,7 +57,19 @@ public class SerialPort {
 			android.util.Log.w(TAG, "chmod777: sh chmod失败: " + e.getMessage());
 		}
 		
-		// 方法3：尝试使用su权限
+		// 方法3：使用增强的Root权限方法
+		if (RootTest.hasRootAccess()) {
+			android.util.Log.i(TAG, "chmod777: 检测到Root权限，使用增强Root方法");
+			boolean rootResult = RootTest.forceChmodSerialPort(file.getAbsolutePath());
+			if (rootResult && file.canRead() && file.canWrite()) {
+				android.util.Log.i(TAG, "chmod777: 增强Root权限修改成功");
+				return true;
+			} else {
+				android.util.Log.w(TAG, "chmod777: 增强Root权限修改失败");
+			}
+		}
+		
+		// 方法4：传统su方法作为备用
 		try {
 			Process su = Runtime.getRuntime().exec("/system/bin/su");
 			String cmd = "chmod 777 " + file.getAbsolutePath() + "\nexit\n";
@@ -74,7 +86,7 @@ public class SerialPort {
 			android.util.Log.w(TAG, "chmod777: su chmod失败: " + e.getMessage());
 		}
 		
-		// 方法4：尝试使用系统签名应用的特权
+		// 方法5：尝试使用系统签名应用的特权
 		try {
 			java.lang.reflect.Method setReadableMethod = File.class.getMethod("setReadable", boolean.class, boolean.class);
 			java.lang.reflect.Method setWritableMethod = File.class.getMethod("setWritable", boolean.class, boolean.class);
@@ -95,7 +107,7 @@ public class SerialPort {
 			android.util.Log.w(TAG, "chmod777: 反射设置权限失败: " + e.getMessage());
 		}
 		
-		// 方法5：尝试使用toolbox
+		// 方法6：尝试使用toolbox
 		try {
 			Process toolbox = Runtime.getRuntime().exec("/system/bin/toolbox chmod 777 " + file.getAbsolutePath());
 			int exitCode = toolbox.waitFor();
@@ -109,7 +121,7 @@ public class SerialPort {
 			android.util.Log.w(TAG, "chmod777: toolbox chmod失败: " + e.getMessage());
 		}
 		
-		// 方法6：尝试busybox
+		// 方法7：尝试busybox
 		try {
 			Process busybox = Runtime.getRuntime().exec("busybox chmod 777 " + file.getAbsolutePath());
 			int exitCode = busybox.waitFor();

@@ -105,16 +105,35 @@ public class SerialPortManager extends SerialPort {
 						mFd = SystemSignatureHelper.ultimateSystemOpen(device.getAbsolutePath(), baudRate, dataBits, parity, stopBits, flowCon);
 						
 						if (mFd == null) {
-							Log.e(TAG, "openSerialPort: 包括终极方案在内的所有方法都失败了，无法打开串口");
-							Log.e(TAG, "openSerialPort: 请检查：");
-							Log.e(TAG, "openSerialPort:   1. 应用是否具有系统签名");
-							Log.e(TAG, "openSerialPort:   2. SELinux策略是否允许访问");
-							Log.e(TAG, "openSerialPort:   3. 设备文件是否存在且权限正确");
-							Log.e(TAG, "openSerialPort:   4. 是否需要联系设备厂商获取特殊权限");
-							if (null != mOnSerialPortListener) {
-								mOnSerialPortListener.onFail(device, OnSerialPortListener.Status.OPEN_FAIL);
+							Log.w(TAG, "openSerialPort: 系统签名方案也失败，尝试Root权限方案");
+							
+							// 最后尝试：Root权限方案
+							if (RootTest.hasRootAccess()) {
+								Log.i(TAG, "openSerialPort: 检测到Root权限，启用Root方案");
+								mFd = RootTest.rootCompleteOpen(device.getAbsolutePath(), baudRate, dataBits, parity, stopBits, flowCon);
+								
+								if (mFd != null) {
+									Log.i(TAG, "openSerialPort: Root权限方案成功打开串口！");
+								} else {
+									Log.e(TAG, "openSerialPort: Root权限方案也失败了");
+								}
+							} else {
+								Log.w(TAG, "openSerialPort: 没有Root权限，无法使用Root方案");
 							}
-							return false;
+							
+							if (mFd == null) {
+								Log.e(TAG, "openSerialPort: 包括Root方案在内的所有方法都失败了，无法打开串口");
+								Log.e(TAG, "openSerialPort: 请检查：");
+								Log.e(TAG, "openSerialPort:   1. 应用是否具有系统签名");
+								Log.e(TAG, "openSerialPort:   2. SELinux策略是否允许访问");
+								Log.e(TAG, "openSerialPort:   3. 设备文件是否存在且权限正确");
+								Log.e(TAG, "openSerialPort:   4. 设备是否已Root且授权应用Root权限");
+								Log.e(TAG, "openSerialPort:   5. 是否需要联系设备厂商获取特殊权限");
+								if (null != mOnSerialPortListener) {
+									mOnSerialPortListener.onFail(device, OnSerialPortListener.Status.OPEN_FAIL);
+								}
+								return false;
+							}
 						} else {
 							Log.i(TAG, "openSerialPort: 终极系统签名方案成功打开串口！");
 							// 终极方案已经包含了完整的配置，无需额外配置

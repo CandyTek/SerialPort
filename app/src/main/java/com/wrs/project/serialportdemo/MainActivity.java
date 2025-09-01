@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.wrs.project.module.serialport.Device;
+import com.wrs.project.module.serialport.RootTest;
 import com.wrs.project.module.serialport.SerialPortFinder;
 import com.wrs.project.module.serialport.SerialPortManager;
 import com.wrs.project.module.serialport.listener.OnSerialPortListener;
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements OnSerialPortListe
 				}
 			}
 		});
+		RootTest.runTest();
 	}
 
 	/**

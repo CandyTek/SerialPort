@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+   android:sharedUserId="android.uid.system"
     package="com.wrs.project.serialportdemo">
+
+<!--     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
+<!--     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> -->
+    <!-- 串口权限通常通过native层直接访问设备节点 -->
+    <uses-permission android:name="android.permission.SERIAL_PORT" />
+          <uses-permission android:name="android.permission.DEVICE_POWER" />
+         <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
 
     <application
         android:allowBackup="true"

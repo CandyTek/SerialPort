@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 添加到你的AndroidManifest.xml的<manifest>标签内 -->
+
+<!-- 系统签名应用专用权限 -->
+<uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+<uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
+<uses-permission android:name="android.permission.ACCESS_HARDWARE_CONFIG" />
+
+<!-- 串口访问专用权限 -->
+<uses-permission android:name="android.permission.HARDWARE_TEST" />
+<uses-permission android:name="android.permission.DEVICE_POWER" />
+<uses-permission android:name="android.permission.SERIAL_PORT" />
+
+<!-- 组权限 -->
+<uses-permission android:name="android.permission.BLUETOOTH" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+<!-- 添加到<application>标签内 -->
+<application 
+    android:sharedUserId="android.uid.system"
+    android:sharedUserLabel="@string/app_name">
+    
+    <!-- 你的其他配置 -->
+    
+</application>

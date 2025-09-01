@@ -1,8 +1,25 @@
 plugins {
 	id 'com.android.application'
 }
+def versionPropsFile = file("version.properties")
+Properties versionProps = new Properties()
 
 android {
+	signingConfigs {
+		debug {
+			if (versionPropsFile.canRead()) {
+				versionProps.load(new FileInputStream(versionPropsFile))
+				storeFile file(versionProps['storefile'].toString())
+				storePassword versionProps['KEYSTORE_PASSWORD'].toString()
+				keyAlias versionProps['keyAlias'].toString()
+				keyPassword versionProps['KEY_PASSWORD'].toString()
+			} else {
+				//throw new GradleException("Could not read version.properties!")
+			}
+		}
+		
+	}
+
 	namespace 'com.wrs.project.serialportdemo'
 	compileSdkVersion 33
 	dataBinding {
@@ -12,7 +29,7 @@ android {
 		applicationId "com.wrs.project.serialportdemo"
 		minSdkVersion 21
 		//noinspection ExpiredTargetSdkVersion
-		targetSdkVersion 29
+		targetSdkVersion 28
 		versionCode 1
 		versionName "1.0"
 
@@ -25,9 +42,13 @@ android {
 	}
 
 	buildTypes {
+		debug {
+			signingConfig signingConfigs.debug
+		}
 		release {
 			minifyEnabled false
 			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+			signingConfig signingConfigs.debug
 
 			externalNativeBuild {
 				cmake {

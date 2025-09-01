@@ -1,9 +1,5 @@
 package com.wrs.project.serialportdemo;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +9,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import com.wrs.project.module.serialport.Device;
 import com.wrs.project.module.serialport.SerialPortFinder;
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements OnSerialPortListe
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+		binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
 		SerialPortFinder serialPortFinder = new SerialPortFinder();
 		List<Device> devices = serialPortFinder.getDevices();
 		if (null != devices && devices.size() > 0) {
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements OnSerialPortListe
 		refreshFlowCon();
 		binding.autoSendCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
 				if (isChecked) {
 					startAutoSend();
 				} else {
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements OnSerialPortListe
 			public void run() {
 				sendData(null);
 			}
-		}, new Date(), time);
+		},new Date(),time);
 	}
 
 	/**
@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements OnSerialPortListe
 		}
 	}
 
-
 	public void openSerialPort(View view) {
 		if (null != device) {
 			if (null == serialPortManager) {
@@ -108,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements OnSerialPortListe
 			} else {
 				serialPortManager.setOnSerialPortListener(this);
 				baudRate = Integer.parseInt(binding.baudRateEditTxt.getText().toString());
-				serialPortManager.openSerialPort(device.getFile(), baudRate, dataBits, parity, stopBits, flowCon);
+				serialPortManager.openSerialPort(device.getFile(),baudRate,dataBits,parity,stopBits,flowCon);
 			}
 		} else {
 			showToast("请先选择一个串口！");
@@ -130,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements OnSerialPortListe
 				data = ByteUtils.hexStrToByteArray(str);
 			}
 			catch (Exception e) {
-				Toast.makeText(this.getApplicationContext(),"十六进制转换失败\n"+e.getMessage(),Toast.LENGTH_SHORT).show();
+				Toast.makeText(this.getApplicationContext(),"十六进制转换失败\n" + e.getMessage(),Toast.LENGTH_SHORT).show();
 			}
 		} else {
 			data = str.getBytes();
@@ -142,16 +141,15 @@ public class MainActivity extends AppCompatActivity implements OnSerialPortListe
 		binding.receiveTxtView.setText("");
 	}
 
-
 	public void selectSerialPort(View view) {
 		SerialPortFinder serialPortFinder = new SerialPortFinder();
 		List<Device> devices = serialPortFinder.getDevices();
 		if (null != devices && devices.size() > 0) {
 			String[] options = new String[devices.size()];
-			for (int i = 0; i < devices.size(); i++) {
+			for (int i = 0;i < devices.size();i++) {
 				options[i] = devices.get(i).getFile().getAbsolutePath();
 			}
-			showOptions("选择一个串口", options, new OptionsOnClickListener() {
+			showOptions("选择一个串口",options,new OptionsOnClickListener() {
 				@Override
 				public void onClick(int index) {
 					device = devices.get(index);
@@ -164,12 +162,12 @@ public class MainActivity extends AppCompatActivity implements OnSerialPortListe
 	}
 
 	public void selectDataBits(View view) {
-		String[] options = {"5", "6", "7", "8"};
+		String[] options = {"5","6","7","8"};
 
-		showOptions("选择停止位", options, new OptionsOnClickListener() {
+		showOptions("选择停止位",options,new OptionsOnClickListener() {
 			@Override
 			public void onClick(int index) {
-				int[] options = {5, 6, 7, 8};
+				int[] options = {5,6,7,8};
 				dataBits = options[index];
 				refreshDataBits();
 			}
@@ -177,12 +175,12 @@ public class MainActivity extends AppCompatActivity implements OnSerialPortListe
 	}
 
 	public void selectParity(View view) {
-		String[] options = {"不校验", "奇校验", "偶校验", "空校验"};
+		String[] options = {"不校验","奇校验","偶校验","空校验"};
 
-		showOptions("选择校验位", options, new OptionsOnClickListener() {
+		showOptions("选择校验位",options,new OptionsOnClickListener() {
 			@Override
 			public void onClick(int index) {
-				int[] options = {0, 1, 2, 3};
+				int[] options = {0,1,2,3};
 				parity = options[index];
 				refreshParity();
 			}
@@ -190,11 +188,11 @@ public class MainActivity extends AppCompatActivity implements OnSerialPortListe
 	}
 
 	public void selectFlowcon(View view) {
-		String[] options = {"不使用", "RTS/CTS", "XON/XOFF"};
-		showOptions("选择流控", options, new OptionsOnClickListener() {
+		String[] options = {"不使用","RTS/CTS","XON/XOFF"};
+		showOptions("选择流控",options,new OptionsOnClickListener() {
 			@Override
 			public void onClick(int index) {
-				int[] options = {0, 1, 2};
+				int[] options = {0,1,2};
 				flowCon = options[index];
 				refreshFlowCon();
 			}
@@ -202,12 +200,12 @@ public class MainActivity extends AppCompatActivity implements OnSerialPortListe
 	}
 
 	public void selectStopBits(View view) {
-		String[] options = {"1", "2"};
+		String[] options = {"1","2"};
 
-		showOptions("选择停止位", options, new OptionsOnClickListener() {
+		showOptions("选择停止位",options,new OptionsOnClickListener() {
 			@Override
 			public void onClick(int index) {
-				int[] options = {1, 2};
+				int[] options = {1,2};
 				stopBits = options[index];
 				refreshStopBits();
 			}
@@ -254,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements OnSerialPortListe
 	}
 
 	private void refreshFlowCon() {
-		String[] options = {"不使用", "RTS/CTS", "XON/XOFF"};
+		String[] options = {"不使用","RTS/CTS","XON/XOFF"};
 		String str = "";
 		switch (flowCon) {
 			case 0: {
@@ -273,15 +271,14 @@ public class MainActivity extends AppCompatActivity implements OnSerialPortListe
 		binding.flowConTxtView.setText(str);
 	}
 
-
-	private void showOptions(String title, String[] options, OptionsOnClickListener listener) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this, android.R.style.Theme_Holo_Light_Dialog);
+	private void showOptions(String title,String[] options,OptionsOnClickListener listener) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this,android.R.style.Theme_Holo_Light_Dialog);
 		//builder.setIcon(R.drawable.ic_launcher);
 		builder.setTitle(title);
 		//    设置一个下拉的列表选择项
-		builder.setItems(options, new DialogInterface.OnClickListener() {
+		builder.setItems(options,new DialogInterface.OnClickListener() {
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
+			public void onClick(DialogInterface dialog,int which) {
 				if (null != listener) {
 					listener.onClick(which);
 				}
@@ -292,7 +289,7 @@ public class MainActivity extends AppCompatActivity implements OnSerialPortListe
 	}
 
 	private void showToast(String msg) {
-		Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+		Toast toast = Toast.makeText(this,msg,Toast.LENGTH_SHORT);
 		toast.show();
 	}
 
@@ -302,7 +299,7 @@ public class MainActivity extends AppCompatActivity implements OnSerialPortListe
 	}
 
 	@Override
-	public void onFail(File device, Status status) {
+	public void onFail(File device,Status status) {
 		binding.openSerialPortBtn.setChecked(false);
 		showToast("串口打开失败！！");
 	}
@@ -320,7 +317,7 @@ public class MainActivity extends AppCompatActivity implements OnSerialPortListe
 		} else {
 			str = new String(bytes);
 		}
-		Log.i("MainActivyty", "收到串口数据:" + str);
+		Log.i("MainActivyty","收到串口数据:" + str);
 		refreshReceive(str);
 	}
 

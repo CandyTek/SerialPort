@@ -1,6 +1,9 @@
 package com.wrs.project.module.serialport;
 
+import android.os.Build;
 import android.util.Log;
+
+import java.io.File;
 import java.io.FileDescriptor;
 import java.lang.reflect.Method;
 
@@ -188,20 +191,22 @@ public class SELinuxBypass {
             Method[] methods = ioUtilsClass.getDeclaredMethods();
             
             for (Method method : methods) {
-                if (method.getName().contains("open") && method.getParameterCount() >= 2) {
-                    Log.d(TAG, "tryAndroidInternalAPI: 找到IoUtils方法: " + method.getName());
-                    try {
-                        method.setAccessible(true);
-                        Object result = method.invoke(null, devicePath, 2);
-                        if (result instanceof FileDescriptor) {
-                            Log.i(TAG, "tryAndroidInternalAPI: IoUtils调用成功");
-                            return (FileDescriptor) result;
-                        }
-                    } catch (Exception e) {
-                        Log.d(TAG, "tryAndroidInternalAPI: IoUtils方法失败: " + e.getMessage());
-                    }
-                }
-            }
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+					if (method.getName().contains("open") && method.getParameterCount() >= 2) {
+						Log.d(TAG, "tryAndroidInternalAPI: 找到IoUtils方法: " + method.getName());
+						try {
+							method.setAccessible(true);
+							Object result = method.invoke(null, devicePath, 2);
+							if (result instanceof FileDescriptor) {
+								Log.i(TAG, "tryAndroidInternalAPI: IoUtils调用成功");
+								return (FileDescriptor) result;
+							}
+						} catch (Exception e) {
+							Log.d(TAG, "tryAndroidInternalAPI: IoUtils方法失败: " + e.getMessage());
+						}
+					}
+				}
+			}
             
         } catch (Exception e) {
             Log.w(TAG, "tryAndroidInternalAPI: IoUtils类加载失败: " + e.getMessage());
@@ -213,22 +218,24 @@ public class SELinuxBypass {
             Method[] methods = pfdClass.getDeclaredMethods();
             
             for (Method method : methods) {
-                if (method.getName().equals("open") && method.getParameterCount() == 2) {
-                    try {
-                        method.setAccessible(true);
-                        Object pfd = method.invoke(null, new java.io.File(devicePath), 0x10000000); // MODE_READ_WRITE
-                        
-                        if (pfd != null) {
-                            Method getFdMethod = pfdClass.getMethod("getFileDescriptor");
-                            FileDescriptor fd = (FileDescriptor) getFdMethod.invoke(pfd);
-                            Log.i(TAG, "tryAndroidInternalAPI: ParcelFileDescriptor调用成功");
-                            return fd;
-                        }
-                    } catch (Exception e) {
-                        Log.d(TAG, "tryAndroidInternalAPI: ParcelFileDescriptor方法失败: " + e.getMessage());
-                    }
-                }
-            }
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+					if (method.getName().equals("open") && method.getParameterCount() == 2) {
+						try {
+							method.setAccessible(true);
+							Object pfd = method.invoke(null, new File(devicePath), 0x10000000); // MODE_READ_WRITE
+							
+							if (pfd != null) {
+								Method getFdMethod = pfdClass.getMethod("getFileDescriptor");
+								FileDescriptor fd = (FileDescriptor) getFdMethod.invoke(pfd);
+								Log.i(TAG, "tryAndroidInternalAPI: ParcelFileDescriptor调用成功");
+								return fd;
+							}
+						} catch (Exception e) {
+							Log.d(TAG, "tryAndroidInternalAPI: ParcelFileDescriptor方法失败: " + e.getMessage());
+						}
+					}
+				}
+			}
             
         } catch (Exception e) {
             Log.w(TAG, "tryAndroidInternalAPI: ParcelFileDescriptor失败: " + e.getMessage());

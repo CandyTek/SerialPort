@@ -109,6 +109,10 @@ public class MainActivity extends AppCompatActivity implements OnSerialPortListe
 			} else {
 				serialPortManager.setOnSerialPortListener(this);
 				baudRate = Integer.parseInt(binding.baudRateEditTxt.getText().toString());
+				
+				// 配置数据接收缓冲参数，解决数据一个字节一个字节接收的问题
+				serialPortManager.setReceiveFrameConfig(100, 1, 1024); // 100ms超时，最小1字节，最大1024字节
+				
 				serialPortManager.openSerialPort(device.getFile(),baudRate,dataBits,parity,stopBits,flowCon);
 			}
 		} else {
@@ -319,8 +323,13 @@ public class MainActivity extends AppCompatActivity implements OnSerialPortListe
 		} else {
 			str = new String(bytes);
 		}
-		Log.i("MainActivyty","收到串口数据:" + str);
-		refreshReceive(str);
+		// 显示帧信息，包括字节数和时间戳
+		String timestamp = android.text.format.DateFormat.format("HH:mm:ss.SSS", new java.util.Date()).toString();
+		Log.i("MainActivyty","[" + timestamp + "] 收到串口数据帧:(" + bytes.length + "字节) " + str);
+		
+		// 在接收显示中也显示帧信息
+		String frameInfo = "[" + timestamp + "] Frame(" + bytes.length + "B): " + str;
+		refreshReceive(frameInfo);
 	}
 
 	@Override

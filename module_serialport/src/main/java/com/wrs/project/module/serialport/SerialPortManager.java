@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.wrs.project.module.serialport.listener.OnSerialPortListener;
 import com.wrs.project.module.serialport.thread.SerialPortReadThread;
+import com.wrs.project.module.serialport.thread.BufferedSerialPortReadThread;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -24,7 +25,7 @@ public class SerialPortManager extends SerialPort {
 
 	private HandlerThread mSendingHandlerThread;
 	private Handler mSendingHandler;
-	private SerialPortReadThread mSerialPortReadThread;
+	private BufferedSerialPortReadThread mSerialPortReadThread;
 	private boolean opened = false;
 	private File device;
 
@@ -308,7 +309,7 @@ public class SerialPortManager extends SerialPort {
 	 * 开启接收消息的线程
 	 */
 	private void startReadThread() {
-		mSerialPortReadThread = new SerialPortReadThread(mFileInputStream) {
+		mSerialPortReadThread = new BufferedSerialPortReadThread(mFileInputStream) {
 			@Override
 			public void onDataReceived(byte[] bytes) {
 				if (null != mOnSerialPortListener) {
@@ -316,7 +317,14 @@ public class SerialPortManager extends SerialPort {
 				}
 			}
 		};
+		
+		// 配置数据帧参数
+		mSerialPortReadThread.setFrameTimeout(100); // 100ms超时
+		mSerialPortReadThread.setFrameSizeRange(1, 1024); // 最小1字节，最大1024字节
+		mSerialPortReadThread.enableTimeoutFraming(); // 使用超时分帧模式
+		
 		mSerialPortReadThread.start();
+		Log.i(TAG, "startReadThread: 启动缓冲读取线程，超时=100ms");
 	}
 
 	/**
@@ -347,6 +355,56 @@ public class SerialPortManager extends SerialPort {
 
 	public boolean isOpened() {
 		return opened;
+	}
+	
+	/**
+	 * 设置数据接收缓冲参数
+	 * @param timeout 数据帧超时时间(毫秒)
+	 * @param minFrameSize 最小帧大小
+	 * @param maxFrameSize 最大帧大小
+	 */
+	public void setReceiveFrameConfig(int timeout, int minFrameSize, int maxFrameSize) {
+		if (mSerialPortReadThread != null) {
+			mSerialPortReadThread.setFrameTimeout(timeout);
+			mSerialPortReadThread.setFrameSizeRange(minFrameSize, maxFrameSize);
+			Log.i(TAG, "setReceiveFrameConfig: timeout=" + timeout + " minSize=" + minFrameSize + " maxSize=" + maxFrameSize);
+		}
+	}
+	
+	/**
+	 * 设置帧结束标记（用于特定协议）
+	 * @param endMarker 结束标记字节数组，null则使用超时模式
+	 */
+	public void setFrameEndMarker(byte[] endMarker) {
+		if (mSerialPortReadThread != null) {
+			if (endMarker != null) {
+				mSerialPortReadThread.enableEndMarkerFraming(endMarker);
+				Log.i(TAG, "setFrameEndMarker: 启用结束符模式，结束符长度=" + endMarker.length);
+			} else {
+				mSerialPortReadThread.enableTimeoutFraming();
+				Log.i(TAG, "setFrameEndMarker: 启用超时模式");
+			}
+		}
+	}
+	
+	/**
+	 * 获取接收缓冲区当前大小
+	 */
+	public int getReceiveBufferSize() {
+		if (mSerialPortReadThread != null) {
+			return mSerialPortReadThread.getBufferSize();
+		}
+		return 0;
+	}
+	
+	/**
+	 * 清空接收缓冲区
+	 */
+	public void clearReceiveBuffer() {
+		if (mSerialPortReadThread != null) {
+			mSerialPortReadThread.clearBuffer();
+			Log.i(TAG, "clearReceiveBuffer: 清空接收缓冲区");
+		}
 	}
 	
 	/**

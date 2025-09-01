@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(./gradlew:*)"
+      "Bash(./gradlew:*)",
+      "Bash(\"I:\\android\\.gradle\\wrapper\\dists\\gradle-7.5-all\\6qsw290k5lz422uaf8jf6m7co\\gradle-7.5\\bin\\gradle.bat\" build)",
+      "Bash(\"I:\\android\\.gradle\\wrapper\\dists\\gradle-7.5-all\\6qsw290k5lz422uaf8jf6m7co\\gradle-7.5\\bin\\gradle.bat\" :module_serialport:compileDebugJavaWithJavac)",
+      "Bash(javac:*)"
     ],
     "deny": [],
     "ask": []

@@ -14,33 +14,33 @@ The project provides a comprehensive serial port solution with support for confi
 
 ```bash
 # Build the project
-./gradlew build
+ I:\android\.gradle\wrapper\dists\gradle-7.5-all\6qsw290k5lz422uaf8jf6m7co\gradle-7.5\bin\gradle.bat build
 
 # Build debug APK
-./gradlew assembleDebug
+I:\android\.gradle\wrapper\dists\gradle-7.5-all\6qsw290k5lz422uaf8jf6m7co\gradle-7.5\bin\gradle.bat assembleDebug
 
 # Build release APK
-./gradlew assembleRelease
+I:\android\.gradle\wrapper\dists\gradle-7.5-all\6qsw290k5lz422uaf8jf6m7co\gradle-7.5\bin\gradle.bat assembleRelease
 
 # Build the library module only
-./gradlew :module_serialport:build
+I:\android\.gradle\wrapper\dists\gradle-7.5-all\6qsw290k5lz422uaf8jf6m7co\gradle-7.5\bin\gradle.bat :module_serialport:build
 
 # Clean build artifacts
-./gradlew clean
+I:\android\.gradle\wrapper\dists\gradle-7.5-all\6qsw290k5lz422uaf8jf6m7co\gradle-7.5\bin\gradle.bat clean
 ```
 
 ## Test Commands
 
 ```bash
 # Run unit tests
-./gradlew test
+I:\android\.gradle\wrapper\dists\gradle-7.5-all\6qsw290k5lz422uaf8jf6m7co\gradle-7.5\bin\gradle.bat test
 
 # Run unit tests for specific module
-./gradlew :module_serialport:test
-./gradlew :app:test
+I:\android\.gradle\wrapper\dists\gradle-7.5-all\6qsw290k5lz422uaf8jf6m7co\gradle-7.5\bin\gradle.bat :module_serialport:test
+I:\android\.gradle\wrapper\dists\gradle-7.5-all\6qsw290k5lz422uaf8jf6m7co\gradle-7.5\bin\gradle.bat :app:test
 
 # Run instrumented tests on connected device
-./gradlew connectedAndroidTest
+I:\android\.gradle\wrapper\dists\gradle-7.5-all\6qsw290k5lz422uaf8jf6m7co\gradle-7.5\bin\gradle.bat connectedAndroidTest
 ```
 
 ## Architecture
